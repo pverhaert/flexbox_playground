@@ -5,16 +5,23 @@ import { flexDefinitions } from '../data/flexboxData';
 import type { FlexDirection, FlexWrap, JustifyContent, AlignItems, AlignContent } from '../types';
 import { GripHorizontal, ChevronDown, ChevronUp, TriangleAlert } from 'lucide-react';
 
-export const Sidebar: React.FC = () => {
+interface SidebarProps {
+    zIndex?: number;
+    onFocus?: () => void;
+}
+
+export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
     const { containerStyle, updateContainerStyle, items } = useFlexbox();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const nodeRef = useRef(null);
 
     return (
-        <Draggable nodeRef={nodeRef} handle=".drag-handle" bounds="parent">
+        <Draggable nodeRef={nodeRef} handle=".drag-handle" bounds="parent" onStart={onFocus}>
             <div
                 ref={nodeRef}
-                className="absolute top-4 left-4 w-80 bg-green-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-green-200 z-40 overflow-hidden"
+                style={{ zIndex }}
+                onMouseDownCapture={onFocus}
+                className="absolute top-4 left-4 w-80 bg-green-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-green-200 overflow-hidden transition-none"
             >
                 {/* Header / Drag Handle */}
                 <div className="drag-handle bg-green-200 p-3 border-b border-green-300 cursor-move flex items-center justify-between group">

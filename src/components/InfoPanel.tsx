@@ -5,7 +5,12 @@ import { flexDefinitions } from '../data/flexboxData';
 import { X, GripHorizontal, ChevronDown, ChevronUp, TriangleAlert } from 'lucide-react';
 import type { AlignSelf } from '../types';
 
-export const InfoPanel: React.FC = () => {
+interface InfoPanelProps {
+    zIndex?: number;
+    onFocus?: () => void;
+}
+
+export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) => {
     const { selectedItemId, items, updateItem, setSelection, containerStyle } = useFlexbox();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const nodeRef = useRef(null);
@@ -17,10 +22,12 @@ export const InfoPanel: React.FC = () => {
     if (!selectedItem) return null;
 
     return (
-        <Draggable nodeRef={nodeRef} handle=".drag-handle" bounds="parent">
+        <Draggable nodeRef={nodeRef} handle=".drag-handle" bounds="parent" onStart={onFocus}>
             <div
                 ref={nodeRef}
-                className="absolute top-20 right-20 w-72 bg-orange-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-orange-200 z-50 overflow-hidden"
+                style={{ zIndex }}
+                onMouseDownCapture={onFocus}
+                className="absolute top-20 right-20 w-72 bg-orange-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-orange-200 overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header / Drag Handle */}

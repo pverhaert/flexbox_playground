@@ -80,7 +80,7 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
             <div
                 className={`w-full h-full rounded-lg transition-all duration-200 flex flex-col items-center justify-center relative group select-none border-2 ${isSelected
                     ? 'bg-blue-50 border-blue-500 shadow-[0_0_0_2px_rgba(59,130,246,0.2)]'
-                    : 'bg-white border-neutral-200 hover:border-neutral-300 hover:shadow-md'
+                    : 'bg-orange-50 border-neutral-200 hover:border-neutral-300 hover:shadow-md'
                     }`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
