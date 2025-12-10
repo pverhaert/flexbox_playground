@@ -3,10 +3,10 @@ import Draggable from 'react-draggable';
 import { useFlexbox, defaultContainerStyle } from '../context/FlexContext';
 import { flexDefinitions } from '../data/flexboxData';
 import type { FlexDirection, FlexWrap, JustifyContent, AlignItems, AlignContent } from '../types';
-import { GripHorizontal, ChevronDown, ChevronUp } from 'lucide-react';
+import { GripHorizontal, ChevronDown, ChevronUp, TriangleAlert } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
-    const { containerStyle, updateContainerStyle } = useFlexbox();
+    const { containerStyle, updateContainerStyle, items } = useFlexbox();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const nodeRef = useRef(null);
 
@@ -14,7 +14,7 @@ export const Sidebar: React.FC = () => {
         <Draggable nodeRef={nodeRef} handle=".drag-handle" bounds="parent">
             <div
                 ref={nodeRef}
-                className="absolute top-4 left-4 w-80 bg-white rounded-xl shadow-2xl border border-neutral-200 z-40 overflow-hidden"
+                className="absolute top-4 left-4 w-80 bg-blue-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-blue-200 z-40 overflow-hidden"
             >
                 {/* Header / Drag Handle */}
                 <div className="drag-handle bg-neutral-100 p-3 border-b border-neutral-200 cursor-move flex items-center justify-between group">
@@ -38,7 +38,7 @@ export const Sidebar: React.FC = () => {
 
                             {/* Flex Direction */}
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Flex Direction</label>
+                                <label className="text-xs font-bold text-blue-700 uppercase tracking-wider">flex-direction</label>
                                 <div className="grid grid-cols-2 gap-2">
                                     {flexDefinitions.flexDirection.options.map((option) => (
                                         <button
@@ -57,7 +57,7 @@ export const Sidebar: React.FC = () => {
 
                             {/* Flex Wrap */}
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Flex Wrap</label>
+                                <label className="text-xs font-bold text-blue-700 uppercase tracking-wider">flex-wrap</label>
                                 <div className="grid grid-cols-3 gap-2">
                                     {flexDefinitions.flexWrap.options.map((option) => (
                                         <button
@@ -76,7 +76,7 @@ export const Sidebar: React.FC = () => {
 
                             {/* Justify Content */}
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Justify Content</label>
+                                <label className="text-xs font-bold text-blue-700 uppercase tracking-wider">justify-content</label>
                                 <select
                                     className="w-full bg-white border border-neutral-200 rounded-md px-3 py-2 text-sm text-neutral-700 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
                                     value={containerStyle.justifyContent}
@@ -88,11 +88,17 @@ export const Sidebar: React.FC = () => {
                                         </option>
                                     ))}
                                 </select>
+                                {items.some(i => i.style.flexGrow > 0) && (
+                                    <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                        <TriangleAlert size={12} className="shrink-0 mt-0.5" />
+                                        <span>May have no effect because items have flex-grow {'>'} 0</span>
+                                    </div>
+                                )}
                             </div>
 
                             {/* Align Items */}
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Align Items</label>
+                                <label className="text-xs font-bold text-blue-700 uppercase tracking-wider">align-items</label>
                                 <select
                                     className="w-full bg-white border border-neutral-200 rounded-md px-3 py-2 text-sm text-neutral-700 focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600"
                                     value={containerStyle.alignItems}
@@ -108,10 +114,10 @@ export const Sidebar: React.FC = () => {
 
                             {/* Align Content */}
                             <div className="space-y-2">
-                                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Align Content</label>
+                                <label className="text-xs font-bold text-blue-700 uppercase tracking-wider">align-content</label>
                                 {containerStyle.flexWrap === 'nowrap' && (
-                                    <div className="text-sm text-red-500 mt-1 flex items-start gap-1">
-                                        <span>⚠️</span>
+                                    <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                        <TriangleAlert size={12} className="shrink-0 mt-0.5" />
                                         <span>align-content property has no effect when flex-wrap is 'nowrap'</span>
                                     </div>
                                 )}
@@ -131,7 +137,7 @@ export const Sidebar: React.FC = () => {
                             {/* Gap */}
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Gap</label>
+                                    <label className="text-xs font-bold text-blue-700 uppercase tracking-wider">gap</label>
                                     <span className="text-xs text-neutral-500">{containerStyle.gap}rem</span>
                                 </div>
                                 <input

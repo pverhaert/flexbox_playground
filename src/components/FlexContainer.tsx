@@ -49,13 +49,13 @@ export const FlexContainer: React.FC = () => {
                     )}
 
                     {/* Add Item Overlay (Top Right) */}
-                    <div className="absolute top-4 right-4 z-10">
+                    <div className="absolute top-2 right-2 z-10">
                         <button
                             onClick={addItem}
-                            className="bg-blue-600 hover:bg-blue-500 text-white p-3 rounded-full shadow-lg transform transition-transform hover:scale-110 active:scale-95 flex items-center gap-2 font-bold"
+                            className="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-full shadow-lg transform transition-transform hover:scale-110 active:scale-95 flex items-center gap-2 font-bold"
                             aria-label="Add Flex Item"
                         >
-                            <Plus size={24} />
+                            <Plus size={18} />
                         </button>
                     </div>
 

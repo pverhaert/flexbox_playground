@@ -2,11 +2,11 @@ import React, { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useFlexbox, defaultItemStyle } from '../context/FlexContext';
 import { flexDefinitions } from '../data/flexboxData';
-import { X, GripHorizontal, ChevronDown, ChevronUp } from 'lucide-react';
+import { X, GripHorizontal, ChevronDown, ChevronUp, TriangleAlert } from 'lucide-react';
 import type { AlignSelf } from '../types';
 
 export const InfoPanel: React.FC = () => {
-    const { selectedItemId, items, updateItem, setSelection } = useFlexbox();
+    const { selectedItemId, items, updateItem, setSelection, containerStyle } = useFlexbox();
     const [isCollapsed, setIsCollapsed] = useState(false);
     const nodeRef = useRef(null);
 
@@ -20,7 +20,7 @@ export const InfoPanel: React.FC = () => {
         <Draggable nodeRef={nodeRef} handle=".drag-handle" bounds="parent">
             <div
                 ref={nodeRef}
-                className="absolute top-20 right-20 w-72 bg-white rounded-xl shadow-2xl border border-neutral-200 z-50 overflow-hidden"
+                className="absolute top-20 right-20 w-72 bg-orange-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-orange-200 z-50 overflow-hidden"
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header / Drag Handle */}
@@ -60,7 +60,7 @@ export const InfoPanel: React.FC = () => {
                             {/* Flex Grow */}
                             <div className="space-y-1">
                                 <div className="flex justify-between items-center">
-                                    <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Flex Grow</label>
+                                    <label className="text-xs font-bold text-orange-700 uppercase tracking-wider">flex-grow</label>
                                     <input
                                         type="number"
                                         min="0"
@@ -70,12 +70,16 @@ export const InfoPanel: React.FC = () => {
                                     />
                                 </div>
                                 <p className="text-[10px] text-neutral-400">Controls how much the item grows compared to others.</p>
+                                <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                    <TriangleAlert size={12} className="shrink-0 mt-0.5" />
+                                    <span>Overrides justify-content</span>
+                                </div>
                             </div>
 
                             {/* Flex Shrink */}
                             <div className="space-y-1">
                                 <div className="flex justify-between items-center">
-                                    <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Flex Shrink</label>
+                                    <label className="text-xs font-bold text-orange-700 uppercase tracking-wider">flex-shrink</label>
                                     <input
                                         type="number"
                                         min="0"
@@ -85,12 +89,16 @@ export const InfoPanel: React.FC = () => {
                                     />
                                 </div>
                                 <p className="text-[10px] text-neutral-400">Controls how much the item shrinks when space is limited.</p>
+                                <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                    <TriangleAlert size={12} className="shrink-0 mt-0.5" />
+                                    <span>Needs min-width: 0 to shrink past content</span>
+                                </div>
                             </div>
 
                             {/* Order */}
                             <div className="space-y-1">
                                 <div className="flex justify-between items-center">
-                                    <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Order</label>
+                                    <label className="text-xs font-bold text-orange-700 uppercase tracking-wider">order</label>
                                     <input
                                         type="number"
                                         className="w-16 bg-white border border-neutral-200 rounded px-2 py-1 text-right text-sm focus:border-blue-500 outline-none focus:ring-1 focus:ring-blue-500"
@@ -103,7 +111,7 @@ export const InfoPanel: React.FC = () => {
                             {/* Flex Basis */}
                             <div className="space-y-1">
                                 <div className="flex justify-between items-center">
-                                    <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider">Flex Basis</label>
+                                    <label className="text-xs font-bold text-orange-700 uppercase tracking-wider">flex-basis</label>
                                     <input
                                         type="text"
                                         className="w-24 bg-white border border-neutral-200 rounded px-2 py-1 text-right text-sm focus:border-blue-500 outline-none focus:ring-1 focus:ring-blue-500"
@@ -111,11 +119,14 @@ export const InfoPanel: React.FC = () => {
                                         onChange={(e) => updateItem(selectedItem.id, { flexBasis: e.target.value })}
                                     />
                                 </div>
+                                <p className="text-[10px] text-neutral-400 mt-1">
+                                    {containerStyle.flexDirection.includes('column') ? 'Acts as Height in Column mode' : 'Acts as Width in Row mode'}
+                                </p>
                             </div>
 
                             {/* Align Self */}
                             <div className="space-y-1">
-                                <label className="text-xs font-medium text-neutral-500 uppercase tracking-wider block mb-1">Align Self</label>
+                                <label className="text-xs font-bold text-orange-700 uppercase tracking-wider block mb-1">align-self</label>
                                 <select
                                     className="w-full bg-white border border-neutral-200 rounded px-2 py-1.5 text-sm text-neutral-700 focus:border-blue-500 outline-none focus:ring-1 focus:ring-blue-500"
                                     value={selectedItem.style.alignSelf}
@@ -128,6 +139,10 @@ export const InfoPanel: React.FC = () => {
                                     ))}
                                 </select>
                                 <p className="text-[10px] text-neutral-400 mt-1">{flexDefinitions.alignSelf.description}</p>
+                                <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                    <TriangleAlert size={12} className="shrink-0 mt-0.5" />
+                                    <span>Overrides align-items</span>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -107,6 +107,57 @@ export const HelpModal: React.FC<HelpModalProps> = ({ children }) => {
                             </div>
                         </section>
 
+                        {/* Common Conflicts */}
+                        <section className="bg-red-50 rounded-lg p-5 border border-red-100">
+                            <div className="flex items-center gap-2 mb-4 text-red-700">
+                                <h3 className="text-lg font-bold">Common Conflicts & Exceptions</h3>
+                            </div>
+                            <ul className="space-y-3 text-sm text-neutral-700">
+                                <li className="flex gap-2">
+                                    <span className="text-red-500 font-bold">•</span>
+                                    <span>
+                                        <strong>Parent: flex-wrap: nowrap + align-content</strong><br />
+                                        If nowrap (default), align-content has absolutely no effect. It only controls spacing of multiple lines.
+                                    </span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <span className="text-red-500 font-bold">•</span>
+                                    <span>
+                                        <strong>Parent: justify-content + Child: flex-grow</strong><br />
+                                        If children grow to fill space, justify-content has no "free space" to distribute and will appear to do nothing.
+                                    </span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <span className="text-red-500 font-bold">•</span>
+                                    <span>
+                                        <strong>Parent: justify/align + Child: margin: auto</strong><br />
+                                        margin: auto greedily absorbs available space, overriding the parent's alignment settings for that item.
+                                    </span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <span className="text-red-500 font-bold">•</span>
+                                    <span>
+                                        <strong>Parent: align-items + Child: align-self</strong><br />
+                                        align-self completely overrides the parent's align-items value for that specific child.
+                                    </span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <span className="text-red-500 font-bold">•</span>
+                                    <span>
+                                        <strong>Direction: column + Child: flex-basis</strong><br />
+                                        In column mode, flex-basis controls Height instead of Width.
+                                    </span>
+                                </li>
+                                <li className="flex gap-2">
+                                    <span className="text-red-500 font-bold">•</span>
+                                    <span>
+                                        <strong>Child: flex-shrink + min-width: auto</strong><br />
+                                        Items won't shrink below their content size by default. Set <code>min-width: 0</code> to force shrinking.
+                                    </span>
+                                </li>
+                            </ul>
+                        </section>
+
                     </div>
                 </Dialog.Content>
             </Dialog.Portal>
