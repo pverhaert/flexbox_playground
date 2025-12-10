@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+.react-resizable {
+    position: relative;
+}
+
+.react-resizable-handle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    bottom: 0;
+    right: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233b82f6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v6'/%3E%3Cpath d='M15 21h6'/%3E%3Cpath d='M21 21v0'/%3E%3Cpath d='M12 21h0'/%3E%3Cpath d='M21 12h0'/%3E%3Cpath d='M18 18h0'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    box-sizing: border-box;
+    cursor: se-resize;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.react-resizable-handle:hover {
+    opacity: 1;
+}
+
+.react-resizable-handle-s {
+    bottom: 0;
+    left: 50%;
+    margin-left: -10px;
+    cursor: s-resize;
+    transform: rotate(45deg);
+    /* Simple tweak, usually needs custom icon */
+    background-image: none;
+    /* Reset for custom handle if needed, or keep generic */
+}
+
+/* Custom handles implementation in component usually better for specific look */
