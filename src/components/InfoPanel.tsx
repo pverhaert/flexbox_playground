@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import Draggable from 'react-draggable';
 import { useFlexbox, defaultItemStyle } from '../context/FlexContext';
 import { flexDefinitions } from '../data/flexboxData';
-import { X, GripHorizontal, ChevronDown, ChevronUp, TriangleAlert } from 'lucide-react';
+import { X, GripHorizontal, ChevronDown, ChevronUp, TriangleAlert, RotateCcw } from 'lucide-react';
 import type { AlignSelf } from '../types';
 
 interface InfoPanelProps {
@@ -37,6 +37,13 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) =>
                         <span>Inspector: Item {selectedItem.text}</span>
                     </div>
                     <div className="flex items-center gap-1">
+                        <button
+                            onClick={() => updateItem(selectedItem.id, { ...defaultItemStyle, width: undefined, height: undefined })}
+                            className="text-neutral-500 hover:text-orange-700 p-1 rounded-md hover:bg-orange-300/50 mr-1"
+                            title="Reset Item to Defaults"
+                        >
+                            <RotateCcw size={14} />
+                        </button>
                         <button
                             onClick={() => setIsCollapsed(!isCollapsed)}
                             className="text-neutral-500 hover:text-neutral-700 p-1 rounded-md hover:bg-orange-300/50"

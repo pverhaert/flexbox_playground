@@ -3,6 +3,7 @@ import { ResizableBox } from 'react-resizable';
 import { Trash2 } from 'lucide-react';
 import { useFlexbox } from '../context/FlexContext';
 import type { FlexItem as FlexItemType } from '../types';
+import { ResizeHandle } from './ResizeHandle';
 
 interface FlexItemProps {
     item: FlexItemType;
@@ -67,14 +68,9 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
             resizeHandles={['se']}
             style={styleOverrides}
             handle={
-                <div className={`absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-20 flex items-center justify-center rounded-tl-md transition-opacity duration-200 ${isHovered || isSelected ? 'opacity-100' : 'opacity-0'
-                    } ${isSelected ? 'bg-blue-500' : 'bg-neutral-400 hover:bg-neutral-600'}`}>
-                    {/* Visual grip lines */}
-                    <div className="relative w-3 h-3">
-                        <div className="absolute bottom-0.5 right-0.5 w-[2px] h-[8px] bg-white transform -rotate-45 origin-bottom-right"></div>
-                        <div className="absolute bottom-0.5 right-0.5 w-[8px] h-[2px] bg-white transform -rotate-45 origin-bottom-right"></div>
-                    </div>
-                </div>
+                <span className={`custom-handle absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-20 flex items-center justify-center transition-opacity duration-200 ${isHovered || isSelected ? 'opacity-100' : 'opacity-0'}`}>
+                    <ResizeHandle className={isSelected ? 'text-blue-500' : 'text-neutral-400'} />
+                </span>
             }
         >
             <div
@@ -117,6 +113,6 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
                     </div>
                 )}
             </div>
-        </ResizableBox>
+        </ResizableBox >
     );
 };

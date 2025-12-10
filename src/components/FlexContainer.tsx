@@ -4,6 +4,7 @@ import Draggable from 'react-draggable';
 import { useFlexbox } from '../context/FlexContext';
 import { FlexItem as FlexItemComponent } from './FlexItem';
 import { Plus, GripHorizontal } from 'lucide-react';
+import { ResizeHandle } from './ResizeHandle';
 
 interface FlexContainerProps {
     zIndex?: number;
@@ -29,11 +30,36 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                         onResizeStart={(e) => {
                             e.stopPropagation();
                         }}
+                        handle={
+                            <span className="custom-handle absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-20 flex items-center justify-center">
+                                <ResizeHandle className="text-neutral-400" />
+                            </span>
+                        }
                     >
                         {/* Drag Handle */}
-                        <div className="preview-handle h-8 bg-blue-200 border-b border-blue-300 rounded-t-xl cursor-move flex items-center justify-center gap-2 text-neutral-600 hover:text-neutral-800 hover:bg-blue-300 transition-colors">
-                            <GripHorizontal size={14} />
-                            <span className="text-xs font-bold uppercase tracking-wide">Preview</span>
+                        <div className="preview-handle h-8 bg-blue-200 border-b border-blue-300 rounded-t-xl cursor-move flex items-center justify-center relative group-header text-neutral-600 hover:text-neutral-800 hover:bg-blue-300 transition-colors">
+                            <div className="flex items-center gap-2">
+                                <GripHorizontal size={14} />
+                                <span className="text-xs font-bold uppercase tracking-wide">Preview</span>
+                            </div>
+
+                            {/* Add Item Button (Moved to Header) */}
+                            <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        addItem();
+                                    }}
+                                    className="p-1 bg-blue-600 hover:bg-blue-500 text-white rounded shadow-sm transition-transform hover:scale-110 active:scale-95 flex items-center justify-center group/btn relative"
+                                    aria-label="Add Flex Item"
+                                >
+                                    <Plus size={14} />
+                                    {/* Tooltip */}
+                                    <span className="absolute right-full mr-2 top-1/2 -translate-y-1/2 px-2 py-1 bg-neutral-900 text-white text-[10px] rounded opacity-0 group-hover/btn:opacity-100 transition-opacity whitespace-nowrap pointer-events-none z-60">
+                                        Add Item
+                                    </span>
+                                </button>
+                            </div>
                         </div>
 
                         {/* Flex Container Content */}
@@ -54,23 +80,12 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                                 <FlexItemComponent key={item.id} item={item} />
                             ))}
 
-                            {/* Empty State / Add Item Overlay */}
+                            {/* Empty State */}
                             {items.length === 0 && (
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                                     <span className="text-neutral-400 font-medium">No items</span>
                                 </div>
                             )}
-
-                            {/* Add Item Overlay (Top Right) */}
-                            <div className="absolute top-2 right-2 z-10">
-                                <button
-                                    onClick={addItem}
-                                    className="bg-blue-600 hover:bg-blue-500 text-white p-2 rounded-full shadow-lg transform transition-transform hover:scale-110 active:scale-95 flex items-center gap-2 font-bold"
-                                    aria-label="Add Flex Item"
-                                >
-                                    <Plus size={18} />
-                                </button>
-                            </div>
 
                         </div>
                     </ResizableBox>
