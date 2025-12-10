@@ -23,7 +23,7 @@ export const HelpModal: React.FC<HelpModalProps> = ({ children }) => {
 
                     <div className="p-6 border-b border-neutral-200 flex justify-between items-center bg-neutral-50 rounded-t-xl">
                         <div className="flex items-center gap-3">
-                            <div className="p-2 bg-blue-100 text-blue-600 rounded-lg">
+                            <div className="p-2 bg-green-100 text-green-600 rounded-lg">
                                 <HelpCircle size={24} />
                             </div>
                             <div>
@@ -40,14 +40,14 @@ export const HelpModal: React.FC<HelpModalProps> = ({ children }) => {
 
                         {/* Container Properties */}
                         <section>
-                            <div className="flex items-center gap-2 mb-4 text-blue-700">
+                            <div className="flex items-center gap-2 mb-4 text-green-700">
                                 <Layout size={20} />
                                 <h3 className="text-lg font-bold">Container Properties</h3>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {Object.entries(flexDefinitions).filter(([key]) => !['alignSelf'].includes(key)).map(([key, def]) => (
-                                    <div key={key} className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm hover:border-blue-200 transition-colors">
-                                        <h4 className="font-mono font-bold text-blue-600 text-sm mb-2">{def.title}</h4>
+                                    <div key={key} className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm hover:border-green-200 transition-colors">
+                                        <h4 className="font-mono font-bold text-green-600 text-sm mb-2">{def.title}</h4>
                                         <p className="text-sm text-neutral-600 mb-3 leading-relaxed">{def.description}</p>
                                         <div className="flex flex-wrap gap-1">
                                             {def.options.map(opt => (

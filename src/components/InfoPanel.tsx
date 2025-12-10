@@ -24,7 +24,7 @@ export const InfoPanel: React.FC = () => {
                 onClick={(e) => e.stopPropagation()}
             >
                 {/* Header / Drag Handle */}
-                <div className="drag-handle bg-neutral-100 p-3 border-b border-neutral-200 cursor-move flex items-center justify-between group">
+                <div className="drag-handle bg-orange-200 p-3 border-b border-orange-300 cursor-move flex items-center justify-between group">
                     <div className="flex items-center gap-2 text-neutral-600 font-semibold text-sm">
                         <GripHorizontal size={14} />
                         <span>Inspector: Item {selectedItem.text}</span>
@@ -32,13 +32,13 @@ export const InfoPanel: React.FC = () => {
                     <div className="flex items-center gap-1">
                         <button
                             onClick={() => setIsCollapsed(!isCollapsed)}
-                            className="text-neutral-400 hover:text-neutral-600 p-1 rounded-md hover:bg-neutral-200"
+                            className="text-neutral-500 hover:text-neutral-700 p-1 rounded-md hover:bg-orange-300/50"
                         >
                             {isCollapsed ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
                         </button>
                         <button
                             onClick={() => setSelection(null)}
-                            className="text-neutral-400 hover:text-neutral-600 p-1 rounded-md hover:bg-neutral-200"
+                            className="text-neutral-500 hover:text-neutral-700 p-1 rounded-md hover:bg-orange-300/50"
                         >
                             <X size={14} />
                         </button>
