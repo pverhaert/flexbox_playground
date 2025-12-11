@@ -69,14 +69,14 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
             style={styleOverrides}
             handle={
                 <span className={`custom-handle absolute bottom-0 right-0 w-6 h-6 cursor-se-resize z-20 flex items-center justify-center transition-opacity duration-200 ${isHovered || isSelected ? 'opacity-100' : 'opacity-0'}`}>
-                    <ResizeHandle className={isSelected ? 'text-blue-500' : 'text-neutral-400'} />
+                    <ResizeHandle className={isSelected ? 'text-blue-500 dark:text-blue-400' : 'text-neutral-400 dark:text-neutral-500'} />
                 </span>
             }
         >
             <div
                 className={`w-full h-full rounded-lg transition-all duration-200 flex flex-col items-center justify-center relative group select-none border-2 ${isSelected
-                    ? 'bg-blue-50 border-blue-500 shadow-[0_0_0_2px_rgba(59,130,246,0.2)]'
-                    : 'bg-orange-50 border-neutral-200 hover:border-neutral-300 hover:shadow-md'
+                    ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-500 dark:border-blue-400 shadow-[0_0_0_2px_rgba(59,130,246,0.2)]'
+                    : 'bg-orange-50 dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 hover:border-neutral-300 dark:hover:border-neutral-500 hover:shadow-md'
                     }`}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
@@ -85,14 +85,14 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
                     setSelection(item.id);
                 }}
             >
-                <span className="text-2xl font-bold opacity-30 group-hover:opacity-100 transition-opacity text-neutral-900">
+                <span className="text-2xl font-bold opacity-30 group-hover:opacity-100 transition-opacity text-neutral-900 dark:text-neutral-100">
                     {item.text}
                 </span>
 
                 {/* Controls Overlay */}
                 <div className={`absolute top-2 right-2 flex gap-1 transition-opacity duration-200 ${isHovered || isSelected ? 'opacity-100' : 'opacity-0'}`}>
                     <button
-                        className="p-1.5 bg-white text-neutral-400 hover:text-red-500 rounded-md shadow-sm border border-neutral-200 hover:border-red-200 hover:bg-red-50"
+                        className="p-1.5 bg-white dark:bg-neutral-700 text-neutral-400 dark:text-neutral-400 hover:text-red-500 dark:hover:text-red-400 rounded-md shadow-sm border border-neutral-200 dark:border-neutral-600 hover:border-red-200 dark:hover:border-red-900 hover:bg-red-50 dark:hover:bg-red-900/30"
                         title="Delete Item"
                         onClick={(e) => {
                             e.stopPropagation();
@@ -105,7 +105,7 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
 
                 {/* Info on hover */}
                 {!isSelected && (
-                    <div className="absolute bottom-2 left-2 text-[10px] text-neutral-400 font-mono opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="absolute bottom-2 left-2 text-[10px] text-neutral-400 dark:text-neutral-500 font-mono opacity-0 group-hover:opacity-100 transition-opacity">
                         {shouldStretch
                             ? 'auto'
                             : `${item.style.width || 'auto'} x ${item.style.height || 'auto'}`

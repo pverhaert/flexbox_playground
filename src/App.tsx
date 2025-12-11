@@ -18,7 +18,7 @@ function App() {
 
   return (
     <FlexProvider>
-      <div className="flex h-screen w-full bg-neutral-50 font-sans text-neutral-900 overflow-hidden relative">
+      <div className="flex h-screen w-full bg-neutral-50 dark:bg-neutral-950 font-sans text-neutral-900 dark:text-neutral-100 overflow-hidden relative transition-colors duration-300">
         <Sidebar zIndex={zIndices.sidebar} onFocus={() => bringToFront('sidebar')} />
         <FlexContainer zIndex={zIndices.preview} onFocus={() => bringToFront('preview')} />
         <InfoPanel zIndex={zIndices.info} onFocus={() => bringToFront('info')} />
