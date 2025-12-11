@@ -21,17 +21,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
                 ref={nodeRef}
                 style={{ zIndex }}
                 onMouseDownCapture={onFocus}
-                className="absolute top-4 left-4 w-80 bg-green-50/90 backdrop-blur-sm rounded-xl shadow-2xl border border-green-200 overflow-hidden transition-none"
+                className="absolute top-4 left-4 w-80 bg-green-50/90 dark:bg-neutral-900/95 backdrop-blur-sm rounded-xl shadow-2xl border border-green-200 dark:border-neutral-700 overflow-hidden transition-none"
             >
                 {/* Header / Drag Handle */}
-                <div className="drag-handle bg-green-200 p-3 border-b border-green-300 cursor-move flex items-center justify-between group">
-                    <div className="flex items-center gap-2 text-neutral-600 font-semibold text-sm">
+                <div className="drag-handle bg-green-200 dark:bg-green-900/50 p-3 border-b border-green-300 dark:border-green-800 cursor-move flex items-center justify-between group">
+                    <div className="flex items-center gap-2 text-green-900 dark:text-green-100 font-semibold text-sm">
                         <GripHorizontal size={14} />
                         <span>Container Inspector</span>
                     </div>
                     <button
                         onClick={() => setIsCollapsed(!isCollapsed)}
-                        className="text-neutral-500 hover:text-neutral-700 p-1 rounded-md hover:bg-green-300/50"
+                        className="text-green-800 dark:text-green-200 hover:text-green-950 dark:hover:text-white p-1 rounded-md hover:bg-green-300/50 dark:hover:bg-green-700/50"
                     >
                         {isCollapsed ? <ChevronDown size={16} /> : <ChevronUp size={16} />}
                     </button>
@@ -39,51 +39,53 @@ export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
 
                 {!isCollapsed && (
                     <>
-                        <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto">
+                        <div className="p-6 space-y-6 max-h-[70vh] overflow-y-auto custom-scrollbar">
 
                             {/* Flex Direction */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-green-700 uppercase tracking-wider">flex-direction</label>
+                                <label className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">flex-direction</label>
                                 <div className="grid grid-cols-2 gap-2">
                                     {flexDefinitions.flexDirection.options.map((option) => (
                                         <button
                                             key={option}
                                             onClick={() => updateContainerStyle({ flexDirection: option as FlexDirection })}
                                             className={`px-3 py-2 text-xs rounded-md border transition-all ${containerStyle.flexDirection === option
-                                                ? 'bg-green-50 border-green-600 text-green-600 font-medium'
-                                                : 'bg-white border-neutral-200 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50'
+                                                ? 'bg-green-50 dark:bg-green-900/40 border-green-600 dark:border-green-500 text-green-600 dark:text-green-300 font-medium'
+                                                : 'bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-neutral-300 dark:hover:border-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-700'
                                                 }`}
                                         >
                                             {option}
                                         </button>
                                     ))}
                                 </div>
+                                <p className="text-[10px] text-neutral-400 dark:text-neutral-500">Defines the direction flex items are placed in the flex container.</p>
                             </div>
 
                             {/* Flex Wrap */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-green-700 uppercase tracking-wider">flex-wrap</label>
+                                <label className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">flex-wrap</label>
                                 <div className="grid grid-cols-3 gap-2">
                                     {flexDefinitions.flexWrap.options.map((option) => (
                                         <button
                                             key={option}
                                             onClick={() => updateContainerStyle({ flexWrap: option as FlexWrap })}
                                             className={`px-2 py-2 text-xs rounded-md border transition-all ${containerStyle.flexWrap === option
-                                                ? 'bg-green-50 border-green-600 text-green-600 font-medium'
-                                                : 'bg-white border-neutral-200 text-neutral-600 hover:border-neutral-300 hover:bg-neutral-50'
+                                                ? 'bg-green-50 dark:bg-green-900/40 border-green-600 dark:border-green-500 text-green-600 dark:text-green-300 font-medium'
+                                                : 'bg-white dark:bg-neutral-800 border-neutral-200 dark:border-neutral-700 text-neutral-600 dark:text-neutral-400 hover:border-neutral-300 dark:hover:border-neutral-500 hover:bg-neutral-50 dark:hover:bg-neutral-700'
                                                 }`}
                                         >
                                             {option}
                                         </button>
                                     ))}
                                 </div>
+                                <p className="text-[10px] text-neutral-400 dark:text-neutral-500">Specifies whether items should wrap or not.</p>
                             </div>
 
                             {/* Justify Content */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-green-700 uppercase tracking-wider">justify-content</label>
+                                <label className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">justify-content</label>
                                 <select
-                                    className="w-full bg-white border border-neutral-200 rounded-md px-3 py-2 text-sm text-neutral-700 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                                    className="w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md px-3 py-2 text-sm text-neutral-700 dark:text-neutral-200 focus:outline-none focus:border-green-600 dark:focus:border-green-500 focus:ring-1 focus:ring-green-600 dark:focus:ring-green-500"
                                     value={containerStyle.justifyContent}
                                     onChange={(e) => updateContainerStyle({ justifyContent: e.target.value as JustifyContent })}
                                 >
@@ -94,18 +96,19 @@ export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
                                     ))}
                                 </select>
                                 {items.some(i => i.style.flexGrow > 0) && (
-                                    <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                    <div className="text-xs text-red-500 dark:text-red-400 mt-1 flex items-start gap-1">
                                         <TriangleAlert size={12} className="shrink-0 mt-0.5" />
                                         <span>May have no effect because items have flex-grow {'>'} 0</span>
                                     </div>
                                 )}
+                                <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1">Defines alignment along the main axis.</p>
                             </div>
 
                             {/* Align Items */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-green-700 uppercase tracking-wider">align-items</label>
+                                <label className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">align-items</label>
                                 <select
-                                    className="w-full bg-white border border-neutral-200 rounded-md px-3 py-2 text-sm text-neutral-700 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                                    className="w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md px-3 py-2 text-sm text-neutral-700 dark:text-neutral-200 focus:outline-none focus:border-green-600 dark:focus:border-green-500 focus:ring-1 focus:ring-green-600 dark:focus:ring-green-500"
                                     value={containerStyle.alignItems}
                                     onChange={(e) => updateContainerStyle({ alignItems: e.target.value as AlignItems })}
                                 >
@@ -115,19 +118,20 @@ export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
                                         </option>
                                     ))}
                                 </select>
+                                <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1">Defines the default behavior for how flex items are laid out along the cross axis.</p>
                             </div>
 
                             {/* Align Content */}
                             <div className="space-y-2">
-                                <label className="text-xs font-bold text-green-700 uppercase tracking-wider">align-content</label>
+                                <label className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">align-content</label>
                                 {containerStyle.flexWrap === 'nowrap' && (
-                                    <div className="text-xs text-red-500 mt-1 flex items-start gap-1">
+                                    <div className="text-xs text-red-500 dark:text-red-400 mt-1 flex items-start gap-1">
                                         <TriangleAlert size={12} className="shrink-0 mt-0.5" />
                                         <span>align-content property has no effect when flex-wrap is 'nowrap'</span>
                                     </div>
                                 )}
                                 <select
-                                    className="w-full bg-white border border-neutral-200 rounded-md px-3 py-2 text-sm text-neutral-700 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-600"
+                                    className="w-full bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-md px-3 py-2 text-sm text-neutral-700 dark:text-neutral-200 focus:outline-none focus:border-green-600 dark:focus:border-green-500 focus:ring-1 focus:ring-green-600 dark:focus:ring-green-500"
                                     value={containerStyle.alignContent}
                                     onChange={(e) => updateContainerStyle({ alignContent: e.target.value as AlignContent })}
                                 >
@@ -137,13 +141,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
                                         </option>
                                     ))}
                                 </select>
+                                <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1">Aligns a flex container's lines within the flex container when there is extra space on the cross-axis.</p>
                             </div>
 
                             {/* Gap */}
                             <div className="space-y-2">
                                 <div className="flex items-center justify-between">
-                                    <label className="text-xs font-bold text-green-700 uppercase tracking-wider">gap</label>
-                                    <span className="text-xs text-neutral-500">{containerStyle.gap}rem</span>
+                                    <label className="text-xs font-bold text-green-700 dark:text-green-400 uppercase tracking-wider">gap</label>
+                                    <span className="text-xs text-neutral-500 dark:text-neutral-400">{containerStyle.gap}rem</span>
                                 </div>
                                 <input
                                     type="range"
@@ -152,8 +157,9 @@ export const Sidebar: React.FC<SidebarProps> = ({ zIndex = 40, onFocus }) => {
                                     step="0.25"
                                     value={containerStyle.gap}
                                     onChange={(e) => updateContainerStyle({ gap: parseFloat(e.target.value) })}
-                                    className="w-full accent-green-600"
+                                    className="w-full accent-green-600 dark:accent-green-500"
                                 />
+                                <p className="text-[10px] text-neutral-400 dark:text-neutral-500 pt-1">Controls the space between items.</p>
                             </div>
 
                         </div>

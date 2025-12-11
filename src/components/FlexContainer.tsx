@@ -16,7 +16,7 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
     const nodeRef = useRef(null);
 
     return (
-        <div className="flex-1 bg-neutral-100 overflow-hidden flex flex-col items-center justify-center p-8 relative">
+        <div className="flex-1 bg-neutral-100 dark:bg-neutral-900 overflow-hidden flex flex-col items-center justify-center p-8 relative transition-colors duration-300">
 
             <Draggable nodeRef={nodeRef} handle=".preview-handle" bounds="parent" onStart={onFocus}>
                 <div ref={nodeRef} className="inline-block relative" style={{ zIndex }} onMouseDownCapture={onFocus}>
@@ -25,7 +25,7 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                         height={400}
                         minConstraints={[300, 200]}
                         maxConstraints={[1200, 800]}
-                        className="relative shadow-xl ring-1 ring-black/5 rounded-xl bg-green-50 transition-shadow duration-200 flex flex-col"
+                        className="relative shadow-xl ring-1 ring-black/5 dark:ring-white/10 rounded-xl bg-green-50 dark:bg-neutral-800 transition-all duration-200 flex flex-col"
                         resizeHandles={['se']}
                         onResizeStart={(e) => {
                             e.stopPropagation();
@@ -37,7 +37,7 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                         }
                     >
                         {/* Drag Handle */}
-                        <div className="preview-handle h-8 bg-blue-200 border-b border-blue-300 rounded-t-xl cursor-move flex items-center justify-center relative group-header text-neutral-600 hover:text-neutral-800 hover:bg-blue-300 transition-colors">
+                        <div className="preview-handle h-8 bg-blue-200 dark:bg-blue-900 border-b border-blue-300 dark:border-blue-800 rounded-t-xl cursor-move flex items-center justify-center relative group-header text-neutral-600 dark:text-blue-100 hover:text-neutral-800 dark:hover:text-white hover:bg-blue-300 dark:hover:bg-blue-800 transition-colors">
                             <div className="flex items-center gap-2">
                                 <GripHorizontal size={14} />
                                 <span className="text-xs font-bold uppercase tracking-wide">Preview</span>
@@ -92,8 +92,8 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                 </div>
             </Draggable>
 
-            <div className="absolute bottom-6 text-neutral-400 text-xs">
-                Drag bottom-right corner to resize container
+            <div className="absolute bottom-6 text-neutral-400 dark:text-neutral-500 text-xs text-center w-full pointer-events-none">
+                Drag bottom-right corner to resize container or items
             </div>
         </div>
     );
