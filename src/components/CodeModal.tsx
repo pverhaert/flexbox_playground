@@ -38,6 +38,8 @@ ${containerProps.join('\n')}
         const itemsCSS = items.map((item: import('../types').FlexItem) => {
             // Only show properties that are not default
             let props = [];
+            if (item.style.width) props.push(`  width: ${item.style.width};`);
+            if (item.style.height) props.push(`  height: ${item.style.height};`);
             if (item.style.alignSelf !== 'auto') props.push(`  align-self: ${item.style.alignSelf};`);
             if (item.style.flexGrow !== 0) props.push(`  flex-grow: ${item.style.flexGrow};`);
             if (item.style.flexShrink !== 1) props.push(`  flex-shrink: ${item.style.flexShrink};`);

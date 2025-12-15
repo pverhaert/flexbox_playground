@@ -80,10 +80,36 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) =>
                             <div className="p-4 space-y-4 overflow-y-auto custom-scrollbar flex-1 relative h-full">
 
                                 {/* Size Readout */}
-                                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-3 text-xs text-blue-800 dark:text-blue-200 flex justify-between">
-                                    <span>Width: <strong>{selectedItem.style.width || 'auto'}</strong></span>
-                                    <span>Height: <strong>{selectedItem.style.height || 'auto'}</strong></span>
-                                </div>
+                                {(() => {
+                                    const isFlexBasisActive = selectedItem.style.flexBasis && selectedItem.style.flexBasis !== 'auto';
+                                    const isColumn = containerStyle.flexDirection.includes('column');
+                                    const widthOverridden = isFlexBasisActive && !isColumn;
+                                    const heightOverridden = isFlexBasisActive && isColumn;
+                                    return (
+                                        <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-800 rounded-lg p-3 text-xs text-blue-800 dark:text-blue-200">
+                                            <div className="flex justify-between items-center">
+                                                <span className={widthOverridden ? 'line-through text-red-500 dark:text-red-400' : ''}>
+                                                    Width: <strong>{selectedItem.style.width || 'auto'}</strong>
+                                                </span>
+                                                <span className={heightOverridden ? 'line-through text-red-500 dark:text-red-400' : ''}>
+                                                    Height: <strong>{selectedItem.style.height || 'auto'}</strong>
+                                                </span>
+                                                <button
+                                                    onClick={() => updateItem(selectedItem.id, { width: undefined, height: undefined })}
+                                                    className="text-blue-500 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 p-1 rounded-md hover:bg-blue-100 dark:hover:bg-blue-800/50"
+                                                    title="Reset Width & Height"
+                                                >
+                                                    <RotateCcw size={12} />
+                                                </button>
+                                            </div>
+                                            {(widthOverridden || heightOverridden) && (
+                                                <p className="text-[10px] text-neutral-500 dark:text-neutral-400 mt-2">
+                                                    {widthOverridden ? 'Width' : 'Height'} is overridden by flex-basis ({selectedItem.style.flexBasis}) in {isColumn ? 'column' : 'row'} mode.
+                                                </p>
+                                            )}
+                                        </div>
+                                    );
+                                })()}
 
                                 <div className="space-y-4">
 
@@ -125,6 +151,31 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) =>
                                         </div>
                                     </div>
 
+                                    {/* Flex Basis */}
+                                    <div className="space-y-1">
+                                        <div className="flex justify-between items-center">
+                                            <label className="text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wider">flex-basis</label>
+                                            <div className="flex items-center gap-1">
+                                                <input
+                                                    type="text"
+                                                    className="w-24 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded px-2 py-1 text-right text-sm text-neutral-900 dark:text-neutral-100 focus:border-blue-500 dark:focus:border-blue-400 outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400"
+                                                    value={selectedItem.style.flexBasis}
+                                                    onChange={(e) => updateItem(selectedItem.id, { flexBasis: e.target.value })}
+                                                />
+                                                <button
+                                                    onClick={() => updateItem(selectedItem.id, { flexBasis: defaultItemStyle.flexBasis })}
+                                                    className="text-neutral-400 dark:text-neutral-500 hover:text-orange-600 dark:hover:text-orange-400 p-1 rounded-md hover:bg-orange-100 dark:hover:bg-orange-900/30"
+                                                    title="Reset flex-basis"
+                                                >
+                                                    <RotateCcw size={12} />
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1">
+                                            {containerStyle.flexDirection.includes('column') ? 'Acts as Height in Column mode' : 'Acts as Width in Row mode'}
+                                        </p>
+                                    </div>
+
                                     {/* Order */}
                                     <div className="space-y-1">
                                         <div className="flex justify-between items-center">
@@ -136,22 +187,6 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) =>
                                                 onChange={(e) => updateItem(selectedItem.id, { order: parseInt(e.target.value) || 0 })}
                                             />
                                         </div>
-                                    </div>
-
-                                    {/* Flex Basis */}
-                                    <div className="space-y-1">
-                                        <div className="flex justify-between items-center">
-                                            <label className="text-xs font-bold text-orange-700 dark:text-orange-400 uppercase tracking-wider">flex-basis</label>
-                                            <input
-                                                type="text"
-                                                className="w-24 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded px-2 py-1 text-right text-sm text-neutral-900 dark:text-neutral-100 focus:border-blue-500 dark:focus:border-blue-400 outline-none focus:ring-1 focus:ring-blue-500 dark:focus:ring-blue-400"
-                                                value={selectedItem.style.flexBasis}
-                                                onChange={(e) => updateItem(selectedItem.id, { flexBasis: e.target.value })}
-                                            />
-                                        </div>
-                                        <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1">
-                                            {containerStyle.flexDirection.includes('column') ? 'Acts as Height in Column mode' : 'Acts as Width in Row mode'}
-                                        </p>
                                     </div>
 
                                     {/* Align Self */}
