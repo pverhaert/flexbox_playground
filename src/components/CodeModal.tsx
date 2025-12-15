@@ -20,6 +20,14 @@ export const CodeModal: React.FC<CodeModalProps> = ({ children }) => {
             justifyContent: 'flex-start',
             alignItems: 'stretch',
             alignContent: 'stretch',
+            rowGap: 0,
+            columnGap: 0,
+        };
+
+        const itemDefaults = {
+            flexGrow: 0,
+            flexShrink: 1,
+            flexBasis: 'auto',
         };
 
         let containerProps = [];
@@ -29,7 +37,18 @@ export const CodeModal: React.FC<CodeModalProps> = ({ children }) => {
         if (containerStyle.justifyContent !== defaults.justifyContent) containerProps.push(`  justify-content: ${containerStyle.justifyContent};`);
         if (containerStyle.alignItems !== defaults.alignItems) containerProps.push(`  align-items: ${containerStyle.alignItems};`);
         if (containerStyle.alignContent !== defaults.alignContent) containerProps.push(`  align-content: ${containerStyle.alignContent};`);
-        if (containerStyle.gap !== 0) containerProps.push(`  gap: ${containerStyle.gap}rem;`);
+
+        // Gap properties
+        const hasRowGap = containerStyle.rowGap !== defaults.rowGap;
+        const hasColumnGap = containerStyle.columnGap !== defaults.columnGap;
+        if (hasRowGap) containerProps.push(`  row-gap: ${containerStyle.rowGap}rem;`);
+        if (hasColumnGap) containerProps.push(`  column-gap: ${containerStyle.columnGap}rem;`);
+        if (hasRowGap || hasColumnGap) {
+            const gapShorthand = containerStyle.rowGap === containerStyle.columnGap
+                ? `${containerStyle.rowGap}rem`
+                : `${containerStyle.rowGap}rem ${containerStyle.columnGap}rem`;
+            containerProps.push(`  /* Shorthand: gap: ${gapShorthand}; */`);
+        }
 
         const containerCSS = `.container {
 ${containerProps.join('\n')}
@@ -41,10 +60,18 @@ ${containerProps.join('\n')}
             if (item.style.width) props.push(`  width: ${item.style.width};`);
             if (item.style.height) props.push(`  height: ${item.style.height};`);
             if (item.style.alignSelf !== 'auto') props.push(`  align-self: ${item.style.alignSelf};`);
-            if (item.style.flexGrow !== 0) props.push(`  flex-grow: ${item.style.flexGrow};`);
-            if (item.style.flexShrink !== 1) props.push(`  flex-shrink: ${item.style.flexShrink};`);
+            if (item.style.flexGrow !== itemDefaults.flexGrow) props.push(`  flex-grow: ${item.style.flexGrow};`);
+            if (item.style.flexShrink !== itemDefaults.flexShrink) props.push(`  flex-shrink: ${item.style.flexShrink};`);
             if (item.style.order !== 0) props.push(`  order: ${item.style.order};`);
-            if (item.style.flexBasis !== 'auto') props.push(`  flex-basis: ${item.style.flexBasis};`);
+            if (item.style.flexBasis !== itemDefaults.flexBasis) props.push(`  flex-basis: ${item.style.flexBasis};`);
+
+            // Add flex shorthand comment if any flex property is non-default
+            const hasFlexGrow = item.style.flexGrow !== itemDefaults.flexGrow;
+            const hasFlexShrink = item.style.flexShrink !== itemDefaults.flexShrink;
+            const hasFlexBasis = item.style.flexBasis !== itemDefaults.flexBasis;
+            if (hasFlexGrow || hasFlexShrink || hasFlexBasis) {
+                props.push(`  /* Shorthand: flex: ${item.style.flexGrow} ${item.style.flexShrink} ${item.style.flexBasis}; */`);
+            }
 
             if (props.length === 0) return '';
 

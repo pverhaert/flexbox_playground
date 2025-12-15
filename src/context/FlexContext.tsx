@@ -7,7 +7,8 @@ export const defaultContainerStyle: FlexContainerStyle = {
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     alignContent: 'stretch',
-    gap: 1, // 1rem
+    rowGap: 1, // 1rem
+    columnGap: 1, // 1rem
 };
 
 export const defaultItemStyle: FlexItemStyle = {

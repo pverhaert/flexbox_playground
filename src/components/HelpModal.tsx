@@ -45,17 +45,19 @@ export const HelpModal: React.FC<HelpModalProps> = ({ children }) => {
                                 <h3 className="text-lg font-bold">Container Properties</h3>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {Object.entries(flexDefinitions).filter(([key]) => !['alignSelf'].includes(key)).map(([key, def]) => (
+                                {Object.entries(flexDefinitions).filter(([key]) => !['alignSelf', 'rowGap', 'columnGap', 'gap', 'flex'].includes(key)).map(([key, def]) => (
                                     <div key={key} className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm hover:border-green-200 transition-colors">
                                         <h4 className="font-mono font-bold text-green-600 text-sm mb-2">{def.title}</h4>
                                         <p className="text-sm text-neutral-600 mb-3 leading-relaxed">{def.description}</p>
+                                        {'options' in def && (
                                         <div className="flex flex-wrap gap-1">
-                                            {def.options.map(opt => (
+                                            {def.options.map((opt: string) => (
                                                 <span key={opt} className="px-2 py-1 bg-neutral-100 text-neutral-500 text-xs rounded-md font-mono border border-neutral-200">
                                                     {opt}
                                                 </span>
                                             ))}
                                         </div>
+                                        )}
                                         {key === 'alignContent' && (
                                             <p className="text-[10px] text-red-500 mt-2 font-medium">
                                                 Note: This property has no effect when flex-wrap is set to nowrap.
@@ -63,6 +65,27 @@ export const HelpModal: React.FC<HelpModalProps> = ({ children }) => {
                                         )}
                                     </div>
                                 ))}
+                                {/* row-gap - container property */}
+                                <div className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm hover:border-green-200 transition-colors">
+                                    <h4 className="font-mono font-bold text-green-600 text-sm mb-2">row-gap</h4>
+                                    <p className="text-sm text-neutral-600 mb-2 leading-relaxed">{flexDefinitions.rowGap.description}</p>
+                                    <span className="text-xs text-neutral-400">Accepts: length (e.g. 1rem, 10px)</span>
+                                </div>
+                                {/* column-gap - container property */}
+                                <div className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm hover:border-green-200 transition-colors">
+                                    <h4 className="font-mono font-bold text-green-600 text-sm mb-2">column-gap</h4>
+                                    <p className="text-sm text-neutral-600 mb-2 leading-relaxed">{flexDefinitions.columnGap.description}</p>
+                                    <span className="text-xs text-neutral-400">Accepts: length (e.g. 1rem, 10px)</span>
+                                </div>
+                                {/* gap shorthand - container property */}
+                                <div className="p-4 border border-purple-200 rounded-lg bg-purple-50 shadow-sm hover:border-purple-300 transition-colors">
+                                    <h4 className="font-mono font-bold text-purple-600 text-sm mb-2">gap</h4>
+                                    <p className="text-sm text-neutral-600 mb-2 leading-relaxed">{flexDefinitions.gap.description}</p>
+                                    <div className="bg-neutral-100 p-2 rounded font-mono text-xs text-neutral-600">
+                                        gap: 1rem; <span className="text-neutral-400">/* same for both */</span><br/>
+                                        gap: 1rem 2rem; <span className="text-neutral-400">/* row-gap column-gap */</span>
+                                    </div>
+                                </div>
                             </div>
                         </section>
 
@@ -87,6 +110,15 @@ export const HelpModal: React.FC<HelpModalProps> = ({ children }) => {
                                     <h4 className="font-mono font-bold text-orange-600 text-sm mb-2">flex-basis</h4>
                                     <p className="text-sm text-neutral-600 mb-2 leading-relaxed">Defines the default size of an element before the remaining space is distributed.</p>
                                     <span className="text-xs text-neutral-400">Accepts: length (e.g. 20%, 5rem, auto)</span>
+                                </div>
+                                {/* flex shorthand - item property */}
+                                <div className="p-4 border border-purple-200 rounded-lg bg-purple-50 shadow-sm hover:border-purple-300 transition-colors">
+                                    <h4 className="font-mono font-bold text-purple-600 text-sm mb-2">flex</h4>
+                                    <p className="text-sm text-neutral-600 mb-2 leading-relaxed">{flexDefinitions.flex.description}</p>
+                                    <div className="bg-neutral-100 p-2 rounded font-mono text-xs text-neutral-600">
+                                        flex: 1; <span className="text-neutral-400">/* grow:1 shrink:1 basis:0% */</span><br/>
+                                        flex: 1 0 auto; <span className="text-neutral-400">/* grow shrink basis */</span>
+                                    </div>
                                 </div>
                                 <div className="p-4 border border-neutral-200 rounded-lg bg-white shadow-sm hover:border-orange-200 transition-colors">
                                     <h4 className="font-mono font-bold text-orange-600 text-sm mb-2">order</h4>

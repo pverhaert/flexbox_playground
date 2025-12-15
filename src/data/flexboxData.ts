@@ -43,4 +43,20 @@ export const flexDefinitions = {
         description: 'Allows the default alignment (or the one specified by align-items) to be overridden for individual flex items.',
         options: ['auto', 'stretch', 'flex-start', 'flex-end', 'center', 'baseline'],
     },
+    rowGap: {
+        title: 'row-gap',
+        description: 'Sets the size of the gap between rows in a flex container.',
+    },
+    columnGap: {
+        title: 'column-gap',
+        description: 'Sets the size of the gap between columns in a flex container.',
+    },
+    gap: {
+        title: 'gap',
+        description: 'Shorthand for row-gap and column-gap. Syntax: gap: <row-gap> <column-gap>; or gap: <both>;',
+    },
+    flex: {
+        title: 'flex',
+        description: 'Shorthand for flex-grow, flex-shrink and flex-basis. Syntax: flex: <grow> <shrink> <basis>;',
+    },
 } as const;

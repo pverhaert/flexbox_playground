@@ -174,6 +174,16 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) =>
                                         <p className="text-[10px] text-neutral-400 dark:text-neutral-500 mt-1">
                                             {containerStyle.flexDirection.includes('column') ? 'Acts as Height in Column mode' : 'Acts as Width in Row mode'}
                                         </p>
+                                        {(selectedItem.style.flexGrow !== defaultItemStyle.flexGrow ||
+                                          selectedItem.style.flexShrink !== defaultItemStyle.flexShrink ||
+                                          selectedItem.style.flexBasis !== defaultItemStyle.flexBasis) && (
+                                            <div className="bg-orange-100 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-800 rounded-md p-2 mt-2">
+                                                <p className="text-[10px] text-orange-700 dark:text-orange-400 font-mono">
+                                                    flex: {selectedItem.style.flexGrow} {selectedItem.style.flexShrink} {selectedItem.style.flexBasis};
+                                                </p>
+                                                <p className="text-[10px] text-neutral-500 dark:text-neutral-400 mt-1">Shorthand for flex-grow, flex-shrink, flex-basis.</p>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Order */}

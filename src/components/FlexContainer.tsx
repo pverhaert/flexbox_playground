@@ -72,7 +72,8 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                                 justifyContent: containerStyle.justifyContent,
                                 alignItems: containerStyle.alignItems,
                                 alignContent: containerStyle.alignContent,
-                                gap: `${containerStyle.gap}rem`,
+                                rowGap: `${containerStyle.rowGap}rem`,
+                                columnGap: `${containerStyle.columnGap}rem`,
                                 padding: '1.5rem',
                             }}
                         >

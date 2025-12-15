@@ -11,7 +11,8 @@ export interface FlexContainerStyle {
     justifyContent: JustifyContent;
     alignItems: AlignItems;
     alignContent: AlignContent;
-    gap: number; // in rem or px, simplified to number for now (using 'rem' in logic)
+    rowGap: number; // in rem
+    columnGap: number; // in rem
 }
 
 export interface FlexItemStyle {
