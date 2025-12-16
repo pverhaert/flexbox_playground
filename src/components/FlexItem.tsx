@@ -42,8 +42,12 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item, flexEnabled = true }) 
     let stretchClass = '';
 
     if (!flexEnabled) {
-        // When flex is disabled, force full width
-        stretchClass = 'w-full!';
+        // When flex is disabled, items stack vertically
+        // Use w-full! only if no explicit width is set (default state)
+        // Once user resizes, item.style.width will be set and we respect that
+        if (!item.style.width) {
+            stretchClass = 'w-full!';
+        }
     } else if (shouldStretch) {
         if (isRow) {
             // Stretch height
