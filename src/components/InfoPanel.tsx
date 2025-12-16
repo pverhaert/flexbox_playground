@@ -33,8 +33,8 @@ export const InfoPanel: React.FC<InfoPanelProps> = ({ zIndex = 50, onFocus }) =>
                 onClick={(e) => e.stopPropagation()}
             >
                 <ResizableBox
-                    width={288}
-                    height={isCollapsed ? 50 : 500}
+                    width={320}
+                    height={isCollapsed ? 50 : 550}
                     minConstraints={[250, isCollapsed ? 50 : 200]}
                     maxConstraints={[400, 800]}
                     className={`bg-orange-50/90 dark:bg-neutral-900/95 backdrop-blur-sm rounded-xl shadow-2xl border border-orange-200 dark:border-neutral-700 overflow-hidden relative flex flex-col transition-none`}

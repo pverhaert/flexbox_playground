@@ -23,7 +23,7 @@ export const Sidebar: React.FC<SidebarProps> = ({zIndex = 40, onFocus}) => {
                 ref={nodeRef}
                 style={{zIndex}}
                 onMouseDownCapture={onFocus}
-                className="absolute top-4 left-4"
+                className="absolute top-10 left-10"
             >
                 <ResizableBox
                     width={320}
