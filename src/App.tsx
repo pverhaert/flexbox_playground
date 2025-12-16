@@ -3,6 +3,7 @@ import { Sidebar } from './components/Sidebar';
 import { FlexContainer } from './components/FlexContainer';
 import { InfoPanel } from './components/InfoPanel';
 import { FloatingControls } from './components/FloatingControls';
+import { FlexToggle } from './components/FlexToggle';
 import { FlexProvider } from './context/FlexContext';
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
   return (
     <FlexProvider>
       <div className="flex h-screen w-full bg-neutral-50 dark:bg-neutral-950 font-sans text-neutral-900 dark:text-neutral-100 overflow-hidden relative transition-colors duration-300">
+        <FlexToggle />
         <Sidebar zIndex={zIndices.sidebar} onFocus={() => bringToFront('sidebar')} />
         <FlexContainer zIndex={zIndices.preview} onFocus={() => bringToFront('preview')} />
         <InfoPanel zIndex={zIndices.info} onFocus={() => bringToFront('info')} />

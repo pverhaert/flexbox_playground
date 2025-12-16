@@ -35,6 +35,7 @@ export interface FlexContextType {
     containerStyle: FlexContainerStyle;
     items: FlexItem[];
     selectedItemId: string | null;
+    flexEnabled: boolean;
 
     // Actions
     updateContainerStyle: (style: Partial<FlexContainerStyle>) => void;
@@ -43,4 +44,5 @@ export interface FlexContextType {
     updateItem: (id: string, style: Partial<FlexItemStyle>) => void;
     setSelection: (id: string | null) => void;
     resetPlayground: () => void;
+    setFlexEnabled: (enabled: boolean) => void;
 }

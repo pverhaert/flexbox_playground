@@ -8,7 +8,7 @@ interface CodeModalProps {
 }
 
 export const CodeModal: React.FC<CodeModalProps> = ({ children }) => {
-    const { containerStyle, items } = useFlexbox();
+    const { containerStyle, items, flexEnabled } = useFlexbox();
     const [open, setOpen] = React.useState(false);
     const [copied, setCopied] = React.useState(false);
 
@@ -31,23 +31,28 @@ export const CodeModal: React.FC<CodeModalProps> = ({ children }) => {
         };
 
         let containerProps = [];
-        containerProps.push('  display: flex;');
-        if (containerStyle.flexDirection !== defaults.flexDirection) containerProps.push(`  flex-direction: ${containerStyle.flexDirection};`);
-        if (containerStyle.flexWrap !== defaults.flexWrap) containerProps.push(`  flex-wrap: ${containerStyle.flexWrap};`);
-        if (containerStyle.justifyContent !== defaults.justifyContent) containerProps.push(`  justify-content: ${containerStyle.justifyContent};`);
-        if (containerStyle.alignItems !== defaults.alignItems) containerProps.push(`  align-items: ${containerStyle.alignItems};`);
-        if (containerStyle.alignContent !== defaults.alignContent) containerProps.push(`  align-content: ${containerStyle.alignContent};`);
 
-        // Gap properties
-        const hasRowGap = containerStyle.rowGap !== defaults.rowGap;
-        const hasColumnGap = containerStyle.columnGap !== defaults.columnGap;
-        if (hasRowGap) containerProps.push(`  row-gap: ${containerStyle.rowGap}rem;`);
-        if (hasColumnGap) containerProps.push(`  column-gap: ${containerStyle.columnGap}rem;`);
-        if (hasRowGap || hasColumnGap) {
-            const gapShorthand = containerStyle.rowGap === containerStyle.columnGap
-                ? `${containerStyle.rowGap}rem`
-                : `${containerStyle.rowGap}rem ${containerStyle.columnGap}rem`;
-            containerProps.push(`  /* Shorthand: gap: ${gapShorthand}; */`);
+        if (flexEnabled) {
+            containerProps.push('  display: flex;');
+            if (containerStyle.flexDirection !== defaults.flexDirection) containerProps.push(`  flex-direction: ${containerStyle.flexDirection};`);
+            if (containerStyle.flexWrap !== defaults.flexWrap) containerProps.push(`  flex-wrap: ${containerStyle.flexWrap};`);
+            if (containerStyle.justifyContent !== defaults.justifyContent) containerProps.push(`  justify-content: ${containerStyle.justifyContent};`);
+            if (containerStyle.alignItems !== defaults.alignItems) containerProps.push(`  align-items: ${containerStyle.alignItems};`);
+            if (containerStyle.alignContent !== defaults.alignContent) containerProps.push(`  align-content: ${containerStyle.alignContent};`);
+
+            // Gap properties
+            const hasRowGap = containerStyle.rowGap !== defaults.rowGap;
+            const hasColumnGap = containerStyle.columnGap !== defaults.columnGap;
+            if (hasRowGap) containerProps.push(`  row-gap: ${containerStyle.rowGap}rem;`);
+            if (hasColumnGap) containerProps.push(`  column-gap: ${containerStyle.columnGap}rem;`);
+            if (hasRowGap || hasColumnGap) {
+                const gapShorthand = containerStyle.rowGap === containerStyle.columnGap
+                    ? `${containerStyle.rowGap}rem`
+                    : `${containerStyle.rowGap}rem ${containerStyle.columnGap}rem`;
+                containerProps.push(`  /* Shorthand: gap: ${gapShorthand}; */`);
+            }
+        } else {
+            containerProps.push('  display: block;');
         }
 
         const containerCSS = `.container {
@@ -59,18 +64,22 @@ ${containerProps.join('\n')}
             let props = [];
             if (item.style.width) props.push(`  width: ${item.style.width};`);
             if (item.style.height) props.push(`  height: ${item.style.height};`);
-            if (item.style.alignSelf !== 'auto') props.push(`  align-self: ${item.style.alignSelf};`);
-            if (item.style.flexGrow !== itemDefaults.flexGrow) props.push(`  flex-grow: ${item.style.flexGrow};`);
-            if (item.style.flexShrink !== itemDefaults.flexShrink) props.push(`  flex-shrink: ${item.style.flexShrink};`);
-            if (item.style.order !== 0) props.push(`  order: ${item.style.order};`);
-            if (item.style.flexBasis !== itemDefaults.flexBasis) props.push(`  flex-basis: ${item.style.flexBasis};`);
 
-            // Add flex shorthand comment if any flex property is non-default
-            const hasFlexGrow = item.style.flexGrow !== itemDefaults.flexGrow;
-            const hasFlexShrink = item.style.flexShrink !== itemDefaults.flexShrink;
-            const hasFlexBasis = item.style.flexBasis !== itemDefaults.flexBasis;
-            if (hasFlexGrow || hasFlexShrink || hasFlexBasis) {
-                props.push(`  /* Shorthand: flex: ${item.style.flexGrow} ${item.style.flexShrink} ${item.style.flexBasis}; */`);
+            // Only include flex-specific properties when flex is enabled
+            if (flexEnabled) {
+                if (item.style.alignSelf !== 'auto') props.push(`  align-self: ${item.style.alignSelf};`);
+                if (item.style.flexGrow !== itemDefaults.flexGrow) props.push(`  flex-grow: ${item.style.flexGrow};`);
+                if (item.style.flexShrink !== itemDefaults.flexShrink) props.push(`  flex-shrink: ${item.style.flexShrink};`);
+                if (item.style.order !== 0) props.push(`  order: ${item.style.order};`);
+                if (item.style.flexBasis !== itemDefaults.flexBasis) props.push(`  flex-basis: ${item.style.flexBasis};`);
+
+                // Add flex shorthand comment if any flex property is non-default
+                const hasFlexGrow = item.style.flexGrow !== itemDefaults.flexGrow;
+                const hasFlexShrink = item.style.flexShrink !== itemDefaults.flexShrink;
+                const hasFlexBasis = item.style.flexBasis !== itemDefaults.flexBasis;
+                if (hasFlexGrow || hasFlexShrink || hasFlexBasis) {
+                    props.push(`  /* Shorthand: flex: ${item.style.flexGrow} ${item.style.flexShrink} ${item.style.flexBasis}; */`);
+                }
             }
 
             if (props.length === 0) return '';

@@ -12,7 +12,7 @@ interface FlexContainerProps {
 }
 
 export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFocus }) => {
-    const { containerStyle, items, addItem } = useFlexbox();
+    const { containerStyle, items, addItem, flexEnabled } = useFlexbox();
     const nodeRef = useRef(null);
 
     return (
@@ -65,7 +65,7 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                         {/* Flex Container Content */}
                         <div
                             className="w-full flex-1 relative group transition-colors duration-300 overflow-hidden rounded-b-xl"
-                            style={{
+                            style={flexEnabled ? {
                                 display: 'flex',
                                 flexDirection: containerStyle.flexDirection,
                                 flexWrap: containerStyle.flexWrap,
@@ -75,10 +75,13 @@ export const FlexContainer: React.FC<FlexContainerProps> = ({ zIndex = 30, onFoc
                                 rowGap: `${containerStyle.rowGap}rem`,
                                 columnGap: `${containerStyle.columnGap}rem`,
                                 padding: '1.5rem',
+                            } : {
+                                display: 'block',
+                                padding: '1.5rem',
                             }}
                         >
                             {items.map((item) => (
-                                <FlexItemComponent key={item.id} item={item} />
+                                <FlexItemComponent key={item.id} item={item} flexEnabled={flexEnabled} />
                             ))}
 
                             {/* Empty State */}

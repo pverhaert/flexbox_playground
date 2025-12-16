@@ -29,6 +29,7 @@ export const FlexProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         { id: '3', text: '3', style: { ...defaultItemStyle } },
     ]);
     const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
+    const [flexEnabled, setFlexEnabled] = useState<boolean>(true);
 
     const updateContainerStyle = (style: Partial<FlexContainerStyle>) => {
         setContainerStyle((prev: FlexContainerStyle) => ({ ...prev, ...style }));
@@ -74,12 +75,14 @@ export const FlexProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 containerStyle,
                 items,
                 selectedItemId,
+                flexEnabled,
                 updateContainerStyle,
                 addItem,
                 removeItem,
                 updateItem,
                 setSelection,
                 resetPlayground,
+                setFlexEnabled,
             }}
         >
             {children}

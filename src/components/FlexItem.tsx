@@ -7,9 +7,10 @@ import { ResizeHandle } from './ResizeHandle';
 
 interface FlexItemProps {
     item: FlexItemType;
+    flexEnabled?: boolean;
 }
 
-export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
+export const FlexItem: React.FC<FlexItemProps> = ({ item, flexEnabled = true }) => {
     const { removeItem, selectedItemId, setSelection, updateItem, containerStyle } = useFlexbox();
     const [isHovered, setIsHovered] = useState(false);
 
@@ -28,17 +29,22 @@ export const FlexItem: React.FC<FlexItemProps> = ({ item }) => {
     // Hybrid Approach:
     // 1. Use !important class (h-auto! / w-auto!) to FORCE override the inline height/width from ResizableBox.
     // 2. Use inline style (minHeight / minWidth) to PREVENT collapsing to 0/text-size when wrapped.
-    const styleOverrides: React.CSSProperties = {
+    const styleOverrides: React.CSSProperties = flexEnabled ? {
         alignSelf: item.style.alignSelf,
         order: item.style.order,
         flexGrow: item.style.flexGrow,
         flexShrink: item.style.flexShrink,
         flexBasis: item.style.flexBasis,
+    } : {
+        marginBottom: '0.5rem',
     };
 
     let stretchClass = '';
 
-    if (shouldStretch) {
+    if (!flexEnabled) {
+        // When flex is disabled, force full width
+        stretchClass = 'w-full!';
+    } else if (shouldStretch) {
         if (isRow) {
             // Stretch height
             stretchClass = 'h-auto!';
